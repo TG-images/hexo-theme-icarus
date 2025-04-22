@@ -18,7 +18,8 @@
     "node": ">=14"
   },
   "scripts": {
-    "lint": "eslint --ext .js --ext .jsx --ext .json ."
+    "lint": "eslint --ext .js --ext .jsx --ext .json .",
+    "generate": "hexo generate"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
