@@ -1,0 +1,43 @@
+name: Hexo Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # 可以根据你使用的分支调整
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # 使用 Node.js 18 版本
+
+      # 安装依赖
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # 生成 Hexo 静态文件
+      - name: Generate Hexo site
+        run: |
+          npm run generate
+
+      # 部署到 GitHub Pages（可选）
+      - name: Deploy to GitHub Pages
+        if: success()  # 只有在生成成功的情况下才执行
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public  # 这里的 ./public 是 Hexo 的默认输出目录
+
